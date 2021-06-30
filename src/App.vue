@@ -3,7 +3,7 @@
         <h1 class="text-4xl text-center">{{ title }}</h1>
         <ul>
             <li v-for="picture in pictures" :key="picture.url">
-                <img class="max-w-xs mt-4" :src="picture.url" :alt="picture.description">
+                <img class="w-72 max-w-xs mt-4" :src="picture.url" :alt="picture.description">
             </li>
         </ul>
     </div>
@@ -18,20 +18,45 @@
             return {
 
                 title: "Coleção de Imagens",
-                pictures: [
-                    {
-                        url: 'https://s2.glbimg.com/VJVCcMAqTPFgb2iIgGQ07l-B80E=/0x0:3000x2704/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2018/t/F/yPSiQtSgAkC8aFiXr2bA/huji.jpg',
-                        description: 'Flor'
-                    },
-                    {
-                        url: 'https://s2.glbimg.com/VJVCcMAqTPFgb2iIgGQ07l-B80E=/0x0:3000x2704/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2018/t/F/yPSiQtSgAkC8aFiXr2bA/huji.jpg',
-                        description: 'Flor'
-                    },
-                ]
+                pictures: []
 
             }
 
         },
+
+        created() {
+
+            this.axios.get("http://localhost:3000/v1/pictures")
+                .then(res => {
+                    this.pictures = res.data
+                })
+                .catch(err => {
+                    if (err.response) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        console.log(err.response.data);
+                        console.log(err.response.status);
+                        console.log(err.response.headers);
+                    } else if (err.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log('Request:');
+                        console.log(err.request);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', err.message);
+                    }
+                    console.log('Config:');
+                    console.log(err.config);
+                });
+
+    /*
+            promise .then(
+                res => this.pictures = res.data
+            );
+    */      
+        }
 
     }
 
