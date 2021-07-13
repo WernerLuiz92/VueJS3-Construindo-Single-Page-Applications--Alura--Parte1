@@ -5,55 +5,27 @@
 
         <!-- Filter Input -->
         <div class="mt-5">
-            <input type="text" @input="" name="filter" id="filter" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Filtrar por parte do título" />
+            <input type="text" @input="filter = $event.target.value" name="filter" id="filter" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Filtrar por parte do título" />
         </div>
 
         <!-- Image List -->
         <ul role="list" class="mt-5 flex flex-row flex-wrap justify-center items-stretch place-content-around">
-            <li v-for="picture in pictures" :key="picture._id" class="p-2 relative mb-10 mx-4 bg-gray-100 rounded-lg shadow-lg hover:shadow-none">
-                <wl-image-card :url="picture.url" :title="picture.title" />
-                <wl-rounded-button type="button" @click="openModal(picture._id)">
-                    <EyeOutline class="h-5 w-5" aria-hidden="true" />
-                </wl-rounded-button>
+            <li v-for="picture in filteredPictures" :key="picture._id">
+                <wl-card :picture="picture" />
             </li>
         </ul>
-
-        <!-- Show Image Modal -->
-        <wl-dialog-modal :show="showModal" @close="closeModal">
-            <template #content>
-                <div class="flex flex-col flex-wrap items-center">
-                    <h1 class="mb-5 text-4xl">{{ modalPicture.title }}</h1>
-                    <img class="h-96" :src="modalPicture.url" alt="">
-                </div>
-            </template>
-
-            <template #footer>
-                <!-- <wl-secondary-button @click="closeModal">
-                    Cancelar
-                </wl-secondary-button>
-
-                <wl-danger-button class="ml-2" @click="deleteException" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Excluir Exceção
-                </wl-danger-button> -->
-            </template>
-        </wl-dialog-modal>
 
     </div>
 </template>
 
 <script>
-    import { EyeIcon as EyeOutline } from '@heroicons/vue/solid';
-    import WlImageCard from './components/shared/panel/ImageCard';
-    import WlDialogModal from './components/shared/Modal/DialogModal';
-    import WlRoundedButton from './components/shared/Buttons/RoundedButton';
+
+    import WlCard from './components/shared/Panel/Card';
 
     export default {
 
         components: {
-            EyeOutline,
-            WlImageCard,
-            WlDialogModal,
-            WlRoundedButton
+            WlCard
         },
 
         data () {
@@ -62,13 +34,25 @@
 
                 title: "Coleção de Imagens",
                 pictures: [],
-                showModal: false,
-                modalPicture: null,
                 filter: '',
             }
         },
 
-        created() {
+        computed: {
+
+            filteredPictures() {
+                if(this.filter) {
+                    let exp = new RegExp(this.filter.trim(), 'i');
+
+                    return this.pictures.filter(picture => exp.test(picture.title));
+                } else {
+                    return this.pictures;
+                }
+            }
+
+        },
+
+        created () {
 
             this.axios.get("http://localhost:3000/v1/pictures")
                 .then(res => {
@@ -95,18 +79,6 @@
                     console.log(err.config);
             });
       
-        },
-
-        methods: {
-            openModal(id) {
-                this.showModal = true;
-                this.modalPicture = this.pictures.find((picture) => picture._id === id);
-            },
-
-            closeModal() {
-                this.showModal = false;
-                this.modalPicture = null;
-            },
         },
     }
 </script>
