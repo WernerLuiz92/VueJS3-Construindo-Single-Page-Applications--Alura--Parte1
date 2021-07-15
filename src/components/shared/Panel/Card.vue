@@ -1,7 +1,7 @@
 <template>
     <div class="p-2 relative mb-10 mx-4 bg-gray-100 rounded-lg shadow-lg hover:shadow-none">
         <transition>
-            <wl-image-card :visible="showCard" :url="picture.url" :title="picture.title"/>
+            <wl-image-card :visible="showCard" :url="picture.url" :title="picture.title" @click="modalToggle"/>
         </transition>
 
         <wl-rounded-button type="button" @click="modalToggle">
@@ -14,7 +14,7 @@
 
 
         <!-- Show Image Modal -->
-        <wl-dialog-modal :show="showModal" @close="closeModal">
+        <wl-dialog-modal :show="showModal" @close="modalToggle">
             <template #content>
                 <div class="flex flex-col flex-wrap items-center">
                     <h1 class="mb-5 text-4xl">{{ picture.title }}</h1>
