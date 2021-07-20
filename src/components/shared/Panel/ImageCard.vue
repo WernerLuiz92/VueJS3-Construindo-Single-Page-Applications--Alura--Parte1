@@ -1,5 +1,5 @@
 <template>
-    <div class="group block w-72 aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-300 overflow-hidden">
+    <div @click="$emit('click')" class="group block w-72 aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-300 overflow-hidden">
         <img
             :src="url"
             :alt="title"
@@ -15,6 +15,8 @@
 <script>
 
     export default {
+
+        emits: ['click'],
 
         props: {
             url: { type: String, default: "#" },
