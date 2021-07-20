@@ -1,20 +1,37 @@
 <template>
-    <div id="app">
-        <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Button text
-        </button>
+    <div class="px-24">
+        <!-- Page Title -->
+        <h1 class="mt-10 text-4xl text-center">{{ title }}</h1>
+
+        <wl-nav-bar></wl-nav-bar>
+
+        <transition name="page">
+            <router-view />
+        </transition>
     </div>
 </template>
 
 <script>
+    import WlNavBar from '@/components/shared/Navigation/NavBar';
 
     export default {
-        name: 'App',
-        components: {}
-    }
 
+        components: {
+            WlNavBar,
+        },
+
+        props: {
+            title: { type: String, default: 'Coleção de Imagens' }
+        }
+
+    }
 </script>
 
-<style lang="scss">
-
+<style scoped>
+    .page-enter-active, .page-leave-active {
+        transition: opacity .3s
+    }
+    .page-enter, .page-leave-active {
+        opacity: 0
+    }
 </style>
