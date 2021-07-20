@@ -27,11 +27,34 @@
                     Fechar
                 </wl-secondary-button>
 
-                <!-- <wl-danger-button class="ml-2" @click="deleteException" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Excluir Exceção
-                </wl-danger-button> -->
+                <wl-danger-button class="ml-2" @click="confirmingPictureDeletion" >
+                    Excluir Foto
+                </wl-danger-button>
             </template>
         </wl-dialog-modal>
+
+        <!-- Delete Image Modal -->
+        <wl-dialog-modal :show="showDeleteModal" @close="confirmingPictureDeletion">
+                <template #title>
+                    <b>Excluir Foto</b>
+                </template>
+
+                <template #content>
+                    Tem certeza que deseja excluir esta foto? Depois que for excluída, não será possivel recuperá-la.
+                </template>
+
+                <template #footer>
+                    <wl-secondary-button @click="confirmingPictureDeletion">
+                        Cancelar
+                    </wl-secondary-button>
+
+                    <wl-danger-button class="ml-2" @click="deletePicture">
+                        Excluir Permanentemente
+                    </wl-danger-button>
+                </template>
+        </wl-dialog-modal>
+
+
     </div>
 </template>
 
@@ -43,6 +66,7 @@
     import WlRoundedButton from '../Buttons/RoundedButton';
     import WlDialogModal from '../Modal/DialogModal';
     import WlSecondaryButton from '../Buttons/SecondaryButton';
+    import WlDangerButton from '../Buttons/DangerButton';
 
     export default {
 
@@ -54,6 +78,7 @@
             WlRoundedButton,
             WlDialogModal,
             WlSecondaryButton,
+            WlDangerButton,
         },
 
         props: {
@@ -64,6 +89,7 @@
 
             return {
                 showModal: false,
+                showDeleteModal: false,
                 showCard: true,
             }
         },
@@ -72,6 +98,10 @@
 
             modalToggle() {
                 this.showModal = !this.showModal;
+            },
+
+            confirmingPictureDeletion() {
+                this.showDeleteModal = !this.showDeleteModal;
             },
 
             cardToggle() {
