@@ -1,8 +1,6 @@
 <template>
     <div class="p-2 relative mb-10 mx-4 bg-gray-100 rounded-lg shadow-lg hover:shadow-none">
-        <transition>
-            <wl-image-card :visible="showCard" :url="picture.url" :title="picture.title" @click="modalToggle"/>
-        </transition>
+        <wl-image-card :visible="showCard" :url="picture.url" :title="picture.title" @click="modalToggle"/>
 
         <wl-rounded-button type="button" @click="modalToggle">
             <ArrowsExpandOutline class="h-5 w-5" aria-hidden="true" />
@@ -17,8 +15,12 @@
         <wl-dialog-modal :show="showModal" @close="modalToggle">
             <template #content>
                 <div class="flex flex-col flex-wrap items-center">
-                    <h1 class="mb-5 text-4xl">{{ picture.title }}</h1>
-                    <img class="h-96" :src="picture.url" alt="">
+                    <div>
+                        <h1 class="mb-5 text-4xl">{{ picture.title }}</h1>
+                    </div>
+                    <div class="overflow-hidden">
+                        <img v-wl-transform:scale.animate="1.5" class="h-96" :src="picture.url" alt="">
+                    </div>
                 </div>
             </template>
 
