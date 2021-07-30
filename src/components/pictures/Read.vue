@@ -1,6 +1,5 @@
 <template>
-        <h2 class="text-center">Lista de Imagens</h2>
-
+    <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
         <!-- Filter Input -->
         <div class="mt-5">
             <input type="text" @input="filter = $event.target.value" name="filter" id="filter" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Filtrar por parte do título" />
@@ -12,6 +11,7 @@
                 <wl-card :picture="picture" />
             </li>
         </ul>
+    </div>
 </template>
 
 <script>
