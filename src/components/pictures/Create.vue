@@ -91,7 +91,7 @@
             </div>
 
             <div class="pb-10 flex justify-end">
-                <router-link to="/">
+                <router-link :to="{ name: 'home' }">
                     <wl-secondary-button type="button" class="mx-2">
                         Cancelar
                     </wl-secondary-button>
@@ -127,7 +127,7 @@
 
             persist() {
 
-                this.axios.post("http://localhost:3000/v1/pictures", this.picture)
+                this.$http.post("v1/pictures", this.picture)
                 .then(() => this.picture = new Picture())
                 .catch(err => {
                     if (err.response) {

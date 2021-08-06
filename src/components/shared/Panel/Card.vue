@@ -110,6 +110,10 @@
                 this.showCard = !this.showCard;
             },
 
+            deletePicture() {
+                this.$emit('deletePictureId', this.picture);
+            }
+
         },
 
     }

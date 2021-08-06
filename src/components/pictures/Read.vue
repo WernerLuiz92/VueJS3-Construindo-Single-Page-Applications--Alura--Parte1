@@ -8,7 +8,7 @@
         <!-- Image List -->
         <ul role="list" class="mt-5 flex flex-row flex-wrap justify-center items-stretch place-content-around">
             <li v-for="picture in filteredPictures" :key="picture._id">
-                <wl-card :picture="picture" />
+                <wl-card :picture="picture" @deletePictureId="deletePicture"/>
             </li>
         </ul>
     </div>
@@ -34,6 +34,39 @@
             }
         },
 
+        methods: {
+            deletePicture(picture) {
+
+                this.$http.delete(`v1/pictures/${picture._id}`)
+                    .then(() => {
+                        let index = this.pictures.indexOf(picture);
+                        this.pictures.splice(index, 1);
+
+                        alert('Foto removida com sucesso!');
+                    })
+                    .catch(err => {
+                        if (err.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+                            console.log(err.response.data);
+                            console.log(err.response.status);
+                            console.log(err.response.headers);
+                        } else if (err.request) {
+                            // The request was made but no response was received
+                            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                            // http.ClientRequest in node.js
+                            console.log('Request:');
+                            console.log(err.request);
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.log('Error', err.message);
+                        }
+                        console.log('Config:');
+                        console.log(err.config);
+                    });
+            }
+        },
+
         computed: {
 
             filteredPictures() {
@@ -50,7 +83,7 @@
 
         created () {
 
-            this.axios.get("http://localhost:3000/v1/pictures")
+            this.$http.get("v1/pictures")
                 .then(res => {
                     this.pictures = res.data
                 })
