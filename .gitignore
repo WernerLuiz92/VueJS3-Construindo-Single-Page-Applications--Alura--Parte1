@@ -1,5 +1,8 @@
 .DS_Store
-node_modules
+API/node_modules
+API/package-lock.json
+APP/node_modules
+APP/package-lock.json
 /dist
 
 
