@@ -1,24 +1,5 @@
-# vuejs1
+# vue3 Studies Project
 
-## Project setup
-```
-npm install
-```
+## README.md
 
-### Compiles and hot-reloads for development
-```
-npm run dev
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+🚧 Under Construction 🚧
